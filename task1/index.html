@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 50px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile, .answer, .transfer-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .profile h2, .answer h3, .transfer-section h3 {
+            margin: 0;
+        }
+        .profile p {
+            font-size: 16px;
+        }
+        .answer {
+            border-left: 5px solid #4CAF50;
+        }
+        .answer p {
+            font-size: 18px;
+        }
+        .transfer-section input, .transfer-section button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .transfer-section input[type="number"] {
+            width: 80px;
+        }
+        .transfer-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .transfer-section button:disabled {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Reward System</h1>
+    </div>
+
+    <!-- User Profile Section -->
+    <div class="profile">
+        <h2>User Profile</h2>
+        <p>Username: <strong>JohnDoe</strong></p>
+        <p>Total Points: <strong id="user-points">15</strong></p>
+    </div>
+
+    <!-- Answer Section -->
+    <div class="answer">
+        <h3>Answer to Question</h3>
+        <p>This is a sample answer that has been given by the user. The user earns points based on the quality and upvotes of their answer.</p>
+        <p>Upvotes: <strong>5</strong></p>
+        <p>Points Earned for Answer: <strong>5</strong></p>
+    </div>
+
+    <!-- Transfer Points Section -->
+    <div class="transfer-section">
+        <h3>Transfer Points</h3>
+        <label for="points-to-transfer">Enter Points to Transfer:</label>
+        <input type="number" id="points-to-transfer" placeholder="Points" min="1" />
+        <input type="text" id="recipient-username" placeholder="Recipient Username" />
+        <button id="transfer-button" onclick="transferPoints()">Transfer</button>
+        <p id="transfer-status"></p>
+    </div>
+</div>
+
+<script>
+    let userPoints = 15; // Example points
+
+    // Function to update points displayed in the profile
+    function updatePoints() {
+        document.getElementById("user-points").innerText = userPoints;
+    }
+
+    // Function to handle points transfer
+    function transferPoints() {
+        const pointsToTransfer = parseInt(document.getElementById("points-to-transfer").value);
+        const recipientUsername = document.getElementById("recipient-username").value;
+        const statusMessage = document.getElementById("transfer-status");
+
+        if (isNaN(pointsToTransfer) || pointsToTransfer <= 0) {
+            statusMessage.textContent = "Please enter a valid number of points to transfer.";
+            return;
+        }
+
+        if (userPoints < pointsToTransfer) {
+            statusMessage.textContent = "You do not have enough points to transfer.";
+            return;
+        }
+
+        if (userPoints <= 10) {
+            statusMessage.textContent = "You must have more than 10 points to transfer.";
+            return;
+        }
+
+        // Transfer points
+        userPoints -= pointsToTransfer;
+        statusMessage.textContent = `Successfully transferred ${pointsToTransfer} points to ${recipientUsername}.`;
+        updatePoints();
+    }
+</script>
+
+</body>
+</html>
